@@ -1,0 +1,5 @@
+ALTER TABLE IF EXISTS import_batches
+ADD COLUMN IF NOT EXISTS imported_by UUID REFERENCES users(id);
+
+ALTER TABLE IF EXISTS import_batches
+ALTER COLUMN imported_by DROP NOT NULL;

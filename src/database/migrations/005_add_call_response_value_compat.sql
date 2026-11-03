@@ -1,0 +1,5 @@
+ALTER TABLE IF EXISTS call_responses
+ADD COLUMN IF NOT EXISTS response_value JSONB;
+
+ALTER TABLE IF EXISTS call_responses
+ADD COLUMN IF NOT EXISTS answer JSONB;
