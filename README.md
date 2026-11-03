@@ -1,6 +1,6 @@
-# PanelSphere - Backend Application
+# Indirex Household Recruitment Panel - Backend Application
 
-**PanelSphere** is an enterprise Household Panel Recruitment & Management System backend API built with Node.js, Express.js, TypeScript, and PostgreSQL.
+**Indirex Household Recruitment Panel** is an enterprise Household Panel Recruitment & Management System backend API built with Node.js, Express.js, TypeScript, and PostgreSQL.
 
 ## Architectural Principles
 
