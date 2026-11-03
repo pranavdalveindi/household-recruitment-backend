@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.noteRouter = void 0;
+const express_1 = require("express");
+const note_controller_1 = require("./note.controller");
+const authenticate_1 = require("../../middleware/authenticate");
+const validate_1 = require("../../middleware/validate");
+const note_validation_1 = require("./note.validation");
+const async_handler_1 = require("../../utils/async-handler");
+exports.noteRouter = (0, express_1.Router)();
+exports.noteRouter.use(authenticate_1.authenticate);
+exports.noteRouter.get('/household/:householdId', (0, async_handler_1.asyncHandler)((req, res) => note_controller_1.noteController.getByHouseholdId(req, res)));
+exports.noteRouter.post('/', (0, validate_1.validateRequest)({ body: note_validation_1.createNoteSchema }), (0, async_handler_1.asyncHandler)((req, res) => note_controller_1.noteController.create(req, res)));

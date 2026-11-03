@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.householdRouter = void 0;
+const express_1 = require("express");
+const household_controller_1 = require("./household.controller");
+const authenticate_1 = require("../../middleware/authenticate");
+const authorize_1 = require("../../middleware/authorize");
+const validate_1 = require("../../middleware/validate");
+const household_validation_1 = require("./household.validation");
+const async_handler_1 = require("../../utils/async-handler");
+exports.householdRouter = (0, express_1.Router)();
+exports.householdRouter.use(authenticate_1.authenticate);
+exports.householdRouter.get('/', (0, async_handler_1.asyncHandler)((req, res) => household_controller_1.householdController.list(req, res)));
+exports.householdRouter.get('/:id', (0, async_handler_1.asyncHandler)((req, res) => household_controller_1.householdController.getById(req, res)));
+exports.householdRouter.post('/', (0, authorize_1.authorize)(['admin', 'panel_manager']), (0, validate_1.validateRequest)({ body: household_validation_1.createHouseholdSchema }), (0, async_handler_1.asyncHandler)((req, res) => household_controller_1.householdController.create(req, res)));

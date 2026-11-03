@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.rejectionRouter = void 0;
+const express_1 = require("express");
+const rejection_controller_1 = require("./rejection.controller");
+const authenticate_1 = require("../../middleware/authenticate");
+const authorize_1 = require("../../middleware/authorize");
+const validate_1 = require("../../middleware/validate");
+const rejection_validation_1 = require("./rejection.validation");
+const async_handler_1 = require("../../utils/async-handler");
+exports.rejectionRouter = (0, express_1.Router)();
+exports.rejectionRouter.use(authenticate_1.authenticate);
+exports.rejectionRouter.get('/', (0, authorize_1.authorize)(['admin', 'panel_manager']), (0, async_handler_1.asyncHandler)((req, res) => rejection_controller_1.rejectionController.list(req, res)));
+exports.rejectionRouter.post('/', (0, authorize_1.authorize)(['admin', 'panel_manager']), (0, validate_1.validateRequest)({ body: rejection_validation_1.permanentRejectionSchema }), (0, async_handler_1.asyncHandler)((req, res) => rejection_controller_1.rejectionController.rejectPermanently(req, res)));
+exports.rejectionRouter.get('/replacements/:householdId', (0, authorize_1.authorize)(['admin', 'panel_manager']), (0, async_handler_1.asyncHandler)((req, res) => rejection_controller_1.rejectionController.findReplacements(req, res)));

@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.questionnaireRouter = void 0;
+const express_1 = require("express");
+const questionnaire_controller_1 = require("./questionnaire.controller");
+const authenticate_1 = require("../../middleware/authenticate");
+const async_handler_1 = require("../../utils/async-handler");
+exports.questionnaireRouter = (0, express_1.Router)();
+exports.questionnaireRouter.use(authenticate_1.authenticate);
+exports.questionnaireRouter.get('/active', (0, async_handler_1.asyncHandler)((req, res) => questionnaire_controller_1.questionnaireController.getActive(req, res)));
+exports.questionnaireRouter.get('/versions', (0, async_handler_1.asyncHandler)((req, res) => questionnaire_controller_1.questionnaireController.getAllVersions(req, res)));

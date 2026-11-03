@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.dashboardRouter = void 0;
+const express_1 = require("express");
+const dashboard_controller_1 = require("./dashboard.controller");
+const authenticate_1 = require("../../middleware/authenticate");
+const async_handler_1 = require("../../utils/async-handler");
+exports.dashboardRouter = (0, express_1.Router)();
+exports.dashboardRouter.use(authenticate_1.authenticate);
+exports.dashboardRouter.get('/', (0, async_handler_1.asyncHandler)((req, res) => dashboard_controller_1.dashboardController.getDashboard(req, res)));

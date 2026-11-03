@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.authRouter = void 0;
+const express_1 = require("express");
+const auth_controller_1 = require("./auth.controller");
+const validate_1 = require("../../middleware/validate");
+const auth_validation_1 = require("./auth.validation");
+const authenticate_1 = require("../../middleware/authenticate");
+const async_handler_1 = require("../../utils/async-handler");
+exports.authRouter = (0, express_1.Router)();
+exports.authRouter.post('/login', (0, validate_1.validateRequest)({ body: auth_validation_1.loginSchema }), (0, async_handler_1.asyncHandler)((req, res) => auth_controller_1.authController.login(req, res)));
+exports.authRouter.post('/logout', authenticate_1.authenticate, (0, async_handler_1.asyncHandler)((req, res) => auth_controller_1.authController.logout(req, res)));
+exports.authRouter.get('/me', authenticate_1.authenticate, (0, async_handler_1.asyncHandler)((req, res) => auth_controller_1.authController.getMe(req, res)));
+exports.authRouter.post('/change-password', authenticate_1.authenticate, (0, validate_1.validateRequest)({ body: auth_validation_1.changePasswordSchema }), (0, async_handler_1.asyncHandler)((req, res) => auth_controller_1.authController.changePassword(req, res)));

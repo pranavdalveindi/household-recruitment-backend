@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.regionRouter = void 0;
+const express_1 = require("express");
+const region_controller_1 = require("./region.controller");
+const authenticate_1 = require("../../middleware/authenticate");
+const authorize_1 = require("../../middleware/authorize");
+const validate_1 = require("../../middleware/validate");
+const region_validation_1 = require("./region.validation");
+const async_handler_1 = require("../../utils/async-handler");
+exports.regionRouter = (0, express_1.Router)();
+exports.regionRouter.use(authenticate_1.authenticate);
+exports.regionRouter.get('/', (0, async_handler_1.asyncHandler)((req, res) => region_controller_1.regionController.getAll(req, res)));
+exports.regionRouter.get('/:id', (0, async_handler_1.asyncHandler)((req, res) => region_controller_1.regionController.getById(req, res)));
+exports.regionRouter.post('/', (0, authorize_1.authorize)(['admin']), (0, validate_1.validateRequest)({ body: region_validation_1.createRegionSchema }), (0, async_handler_1.asyncHandler)((req, res) => region_controller_1.regionController.create(req, res)));
+exports.regionRouter.patch('/:id', (0, authorize_1.authorize)(['admin']), (0, validate_1.validateRequest)({ body: region_validation_1.updateRegionSchema }), (0, async_handler_1.asyncHandler)((req, res) => region_controller_1.regionController.update(req, res)));

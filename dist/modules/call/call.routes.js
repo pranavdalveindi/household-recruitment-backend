@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.callRouter = void 0;
+const express_1 = require("express");
+const call_controller_1 = require("./call.controller");
+const authenticate_1 = require("../../middleware/authenticate");
+const authorize_1 = require("../../middleware/authorize");
+const validate_1 = require("../../middleware/validate");
+const call_validation_1 = require("./call.validation");
+const async_handler_1 = require("../../utils/async-handler");
+exports.callRouter = (0, express_1.Router)();
+exports.callRouter.use(authenticate_1.authenticate);
+exports.callRouter.get('/household/:householdId', (0, async_handler_1.asyncHandler)((req, res) => call_controller_1.callController.getByHouseholdId(req, res)));
+exports.callRouter.post('/', (0, authorize_1.authorize)(['admin', 'panel_manager', 'call_center_agent']), (0, validate_1.validateRequest)({ body: call_validation_1.recordCallAttemptSchema }), (0, async_handler_1.asyncHandler)((req, res) => call_controller_1.callController.recordAttempt(req, res)));

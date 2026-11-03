@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.installationRouter = void 0;
+const express_1 = require("express");
+const installation_controller_1 = require("./installation.controller");
+const authenticate_1 = require("../../middleware/authenticate");
+const authorize_1 = require("../../middleware/authorize");
+const validate_1 = require("../../middleware/validate");
+const installation_validation_1 = require("./installation.validation");
+const async_handler_1 = require("../../utils/async-handler");
+exports.installationRouter = (0, express_1.Router)();
+exports.installationRouter.use(authenticate_1.authenticate);
+exports.installationRouter.get('/', (0, async_handler_1.asyncHandler)((req, res) => installation_controller_1.installationController.list(req, res)));
+exports.installationRouter.post('/', (0, authorize_1.authorize)(['field_executive', 'admin']), (0, validate_1.validateRequest)({ body: installation_validation_1.recordInstallationSchema }), (0, async_handler_1.asyncHandler)((req, res) => installation_controller_1.installationController.recordVisit(req, res)));
